@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía Gráfica: Del Dato Primitivo al Tensor de IA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Ambient Glow Effects */
+        .glow-cyan { filter: drop-shadow(0 0 15px rgba(6, 182, 212, 0.4)); }
+        .glow-purple { filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.4)); }
+        .glow-emerald { filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); }
+
+        /* Custom Animated Gradients */
+        .gradient-text-cyan {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-text-purple {
+            background: linear-gradient(135deg, #c084fc 0%, #f43f5e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-text-emerald {
+            background: linear-gradient(135deg, #34d399 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 3D Scene Styling */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+
+        /* CSS 3D Cube Animation */
+        @keyframes rotateCube {
+            0% { transform: rotateX(-20deg) rotateY(0deg); }
+            100% { transform: rotateX(-20deg) rotateY(360deg); }
+        }
+        .animate-cube-auto {
+            animation: rotateCube 16s linear infinite;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 20px 50px rgba(14, 165, 233, 0.15);
+        }
+
+        /* Pulse Nodes */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: scale(0.98); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+        }
+        .pulse-bg {
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="selection:bg-cyan-500 selection:text-slate-950">
+
+    <!-- Grid Overlay Background -->
+    <div class="fixed inset-0 bg-[linear-gradient(to_right,#1f293715_1px,transparent_1px),linear-gradient(to_bottom,#1f293715_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0"></div>
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none pulse-bg"></div>
+    <div class="fixed bottom-1/3 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] pointer-events-none pulse-bg"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-20">
+
+        <!-- Header -->
+        <header class="text-center space-y-6 max-w-4xl mx-auto pt-6">
+            <div class="inline-flex items-center gap-2 bg-slate-900/80 border border-cyan-500/30 px-4 py-2 rounded-full text-cyan-400 text-xs sm:text-sm font-mono tracking-wider">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                MAPA VISUAL DE DATOS PARA LA ERA DE LA IA
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+                Anatomía Gráfica del Dato: <br/>
+                <span class="gradient-text-cyan">Del Bit al Tensor Multidimensional</span>
+            </h1>
+            
+            <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                Antes de entrenar redes neuronales, entendamos la arquitectura física e hiperdimensional de la información.
+            </p>
+        </header>
+
+        <!-- SECTION 1: ELEMENTOS PRIMITIVOS -->
+        <section class="space-y-8">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold font-mono text-xl shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+                    01
+                </div>
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Elementos Primitivos</h2>
+                    <p class="text-slate-400 text-sm">Bloques atómicos de memoria representados en binario.</p>
+                </div>
+            </div>
+
+            <!-- Grid of Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Integer -->
+                <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 relative group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono bg-cyan-950 text-cyan-300 px-3 py-1 rounded-full border border-cyan-800/50">4 / 8 Bytes</span>
+                        <span class="text-2xl font-bold font-mono text-slate-600 group-hover:text-cyan-400 transition-colors">INT</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Integer (Enteros)</h3>
+                    <p class="text-slate-400 text-xs mb-6">Valores numéricos exactos sin decimales.</p>
+
+                    <!-- Visual Representation -->
+                    <div class="bg-slate-950/80 rounded-xl p-4 border border-slate-800/80 space-y-3">
+                        <div class="flex justify-between items-center text-xs text-slate-400 font-mono">
+                            <span>Valor: <strong class="text-cyan-400">42</strong></span>
+                            <span>Signo + Magnitud</span>
+                        </div>
+                        <!-- Bit Block -->
+                        <div class="grid grid-cols-8 gap-1">
+                            <div class="h-6 bg-cyan-500/30 border border-cyan-400/50 rounded flex items-center justify-center text-[10px] font-mono text-cyan-300">0</div>
+                            <div class="h-6 bg-cyan-500/30 border border-cyan-400/50 rounded flex items-center justify-center text-[10px] font-mono text-cyan-300">0</div>
+                            <div class="h-6 bg-cyan-500/80 border border-cyan-300 rounded flex items-center justify-center text-[10px] font-mono text-white font-bold shadow-[0_0_8px_rgba(6,182,212,0.8)]">1</div>
+                            <div class="h-6 bg-cyan-500/30 border border-cyan-400/50 rounded flex items-center justify-center text-[10px] font-mono text-cyan-300">0</div>
+                            <div class="h-6 bg-cyan-500/80 border border-cyan-300 rounded flex items-center justify-center text-[10px] font-mono text-white font-bold shadow-[0_0_8px_rgba(6,182,212,0.8)]">1</div>
+                            <div class="h-6 bg-cyan-500/30 border border-cyan-400/50 rounded flex items-center justify-center text-[10px] font-mono text-cyan-300">0</div>
+                            <div class="h-6 bg-cyan-500/80 border border-cyan-300 rounded flex items-center justify-center text-[10px] font-mono text-white font-bold shadow-[0_0_8px_rgba(6,182,212,0.8)]">1</div>
+                            <div class="h-6 bg-cyan-500/30 border border-cyan-400/50 rounded flex items-center justify-center text-[10px] font-mono text-cyan-300">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Float -->
+                <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 relative group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono bg-sky-950 text-sky-300 px-3 py-1 rounded-full border border-sky-800/50">IEEE 754 (32-bit)</span>
+                        <span class="text-2xl font-bold font-mono text-slate-600 group-hover:text-sky-400 transition-colors">FLOAT</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Float (Punto Flotante)</h3>
+                    <p class="text-slate-400 text-xs mb-6">Números reales continuos con precisión decimal.</p>
+
+                    <!-- Visual Floating Diagram -->
+                    <div class="bg-slate-950/80 rounded-xl p-4 border border-slate-800/80 space-y-3">
+                        <div class="flex justify-between items-center text-xs text-slate-400 font-mono">
+                            <span>Valor: <strong class="text-sky-400">3.14159</strong></span>
+                        </div>
+                        <div class="flex gap-1">
+                            <div class="w-1/4 bg-rose-500/20 border border-rose-500/50 p-2 rounded text-center">
+                                <span class="text-[9px] text-rose-300 font-mono block">Signo</span>
+                                <span class="text-xs font-mono text-white">[-]</span>
+                            </div>
+                            <div class="w-2/4 bg-amber-500/20 border border-amber-500/50 p-2 rounded text-center">
+                                <span class="text-[9px] text-amber-300 font-mono block">Exponente</span>
+                                <span class="text-xs font-mono text-white">2<sup>127</sup></span>
+                            </div>
+                            <div class="w-2/4 bg-sky-500/20 border border-sky-500/50 p-2 rounded text-center">
+                                <span class="text-[9px] text-sky-300 font-mono block">Mantisa</span>
+                                <span class="text-xs font-mono text-white">.14159</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boolean -->
+                <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 relative group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono bg-emerald-950 text-emerald-300 px-3 py-1 rounded-full border border-emerald-800/50">1 Bit / 1 Byte</span>
+                        <span class="text-2xl font-bold font-mono text-slate-600 group-hover:text-emerald-400 transition-colors">BOOL</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Boolean (Lógicos)</h3>
+                    <p class="text-slate-400 text-xs mb-6">Estado lógico binario: Encendido o Apagado.</p>
+
+                    <!-- Visual Switch Diagram -->
+                    <div class="bg-slate-950/80 rounded-xl p-4 border border-slate-800/80 flex items-center justify-around">
+                        <div class="flex flex-col items-center gap-1">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.5)]">
+                                ⚡
+                            </div>
+                            <span class="text-xs font-mono text-emerald-400 font-bold">TRUE (1)</span>
+                        </div>
+                        <div class="w-px h-10 bg-slate-800"></div>
+                        <div class="flex flex-col items-center gap-1 opacity-40">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-500">
+                                ⚪
+                            </div>
+                            <span class="text-xs font-mono text-slate-500">FALSE (0)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- String -->
+                <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 relative group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono bg-indigo-950 text-indigo-300 px-3 py-1 rounded-full border border-indigo-800/50">UTF-8 / Array</span>
+                        <span class="text-2xl font-bold font-mono text-slate-600 group-hover:text-indigo-400 transition-colors">STR</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">String (Cadenas)</h3>
+                    <p class="text-slate-400 text-xs mb-6">Secuencia encadenada de caracteres codificados.</p>
+
+                    <!-- Chain visual -->
+                    <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80 flex justify-between items-center gap-1">
+                        <div class="bg-indigo-500/20 border border-indigo-500/40 rounded px-2 py-1 text-center font-mono text-xs text-indigo-300">
+                            <span class="text-[9px] text-slate-500 block">0</span>'D'
+                        </div>
+                        <span class="text-slate-600 text-xs">→</span>
+                        <div class="bg-indigo-500/20 border border-indigo-500/40 rounded px-2 py-1 text-center font-mono text-xs text-indigo-300">
+                            <span class="text-[9px] text-slate-500 block">1</span>'A'
+                        </div>
+                        <span class="text-slate-600 text-xs">→</span>
+                        <div class="bg-indigo-500/20 border border-indigo-500/40 rounded px-2 py-1 text-center font-mono text-xs text-indigo-300">
+                            <span class="text-[9px] text-slate-500 block">2</span>'T'
+                        </div>
+                        <span class="text-slate-600 text-xs">→</span>
+                        <div class="bg-indigo-500/20 border border-indigo-500/40 rounded px-2 py-1 text-center font-mono text-xs text-indigo-300">
+                            <span class="text-[9px] text-slate-500 block">3</span>'O'
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bytes -->
+                <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 relative group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono bg-purple-950 text-purple-300 px-3 py-1 rounded-full border border-purple-800/50">Raw Binary</span>
+                        <span class="text-2xl font-bold font-mono text-slate-600 group-hover:text-purple-400 transition-colors">BYTES</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Bytes (Binario Puro)</h3>
+                    <p class="text-slate-400 text-xs mb-6">Secuencia cruda de octetos en almacenamiento.</p>
+
+                    <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80 font-mono text-xs text-purple-300 flex justify-around">
+                        <span class="bg-purple-900/30 px-2 py-1 rounded border border-purple-700/50">\x44</span>
+                        <span class="bg-purple-900/30 px-2 py-1 rounded border border-purple-700/50">\x41</span>
+                        <span class="bg-purple-900/30 px-2 py-1 rounded border border-purple-700/50">\x54</span>
+                        <span class="bg-purple-900/30 px-2 py-1 rounded border border-purple-700/50">\x4F</span>
+                    </div>
+                </div>
+
+                <!-- Char -->
+                <div class="glass-card rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 relative group">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800/50">1 Byte / ASCII</span>
+                        <span class="text-2xl font-bold font-mono text-slate-600 group-hover:text-amber-400 transition-colors">CHAR</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Char (Carácter Unico)</h3>
+                    <p class="text-slate-400 text-xs mb-6">Unidad individual de símbolo numérico o alfabético.</p>
+
+                    <div class="bg-slate-950/80 rounded-xl p-3 border border-slate-800/80 flex items-center justify-center gap-4 font-mono text-xs">
+                        <span class="text-amber-400 text-xl font-bold">'A'</span>
+                        <span class="text-slate-500">⇔</span>
+                        <span class="text-slate-300 bg-slate-900 px-2 py-1 rounded">ASCII 65</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: ESTRUCTURAS EN PYTHON -->
+        <section class="space-y-8">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold font-mono text-xl shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                    02
+                </div>
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Estructuras de Datos en Python</h2>
+                    <p class="text-slate-400 text-sm">Organización espacial y semántica de datos agrupados.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- List -->
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">📦</span>
+                            <h3 class="text-xl font-bold text-white">Listas <span class="text-xs font-mono text-purple-400">[Mutable, Ordenado]</span></h3>
+                        </div>
+                        <span class="font-mono text-xs text-slate-500">my_list = [10, "IA", 3.14]</span>
+                    </div>
+                    <p class="text-slate-400 text-xs mb-6">Cajas continuas indexadas con soporte de modificación dinámica en tiempo de ejecución.</p>
+                    
+                    <!-- Visual Box Container -->
+                    <div class="grid grid-cols-3 gap-3 bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                        <div class="bg-purple-500/10 border-2 border-dashed border-purple-500/50 p-3 rounded-lg text-center relative group-hover:border-purple-400 transition-colors">
+                            <span class="absolute -top-2.5 left-2 bg-purple-950 text-purple-300 text-[9px] font-mono px-1 rounded">Index [0]</span>
+                            <span class="font-mono text-sm text-purple-200 font-bold">10</span>
+                        </div>
+                        <div class="bg-purple-500/10 border-2 border-dashed border-purple-500/50 p-3 rounded-lg text-center relative group-hover:border-purple-400 transition-colors">
+                            <span class="absolute -top-2.5 left-2 bg-purple-950 text-purple-300 text-[9px] font-mono px-1 rounded">Index [1]</span>
+                            <span class="font-mono text-sm text-purple-200 font-bold">"IA"</span>
+                        </div>
+                        <div class="bg-purple-500/10 border-2 border-dashed border-purple-500/50 p-3 rounded-lg text-center relative group-hover:border-purple-400 transition-colors">
+                            <span class="absolute -top-2.5 left-2 bg-purple-950 text-purple-300 text-[9px] font-mono px-1 rounded">Index [2]</span>
+                            <span class="font-mono text-sm text-purple-200 font-bold">3.14</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tuple -->
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">🔒</span>
+                            <h3 class="text-xl font-bold text-white">Tuplas <span class="text-xs font-mono text-slate-400">(Inmutable, Fijo)</span></h3>
+                        </div>
+                        <span class="font-mono text-xs text-slate-500">point = (1920, 1080)</span>
+                    </div>
+                    <p class="text-slate-400 text-xs mb-6">Caja sellada herméticamente. Rápida en memoria e inmutable tras su inicialización.</p>
+                    
+                    <!-- Visual Locked Box -->
+                    <div class="flex gap-3 bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                        <div class="flex-1 bg-slate-900 border border-slate-700 p-3 rounded-lg text-center relative">
+                            <span class="font-mono text-sm text-slate-300 font-bold">1920</span>
+                        </div>
+                        <div class="flex items-center text-slate-600 font-bold">🔒</div>
+                        <div class="flex-1 bg-slate-900 border border-slate-700 p-3 rounded-lg text-center relative">
+                            <span class="font-mono text-sm text-slate-300 font-bold">1080</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dictionary -->
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">🔑</span>
+                            <h3 class="text-xl font-bold text-white">Diccionarios <span class="text-xs font-mono text-amber-400">{Clave : Valor}</span></h3>
+                        </div>
+                        <span class="font-mono text-xs text-slate-500">user = {"id": 99}</span>
+                    </div>
+                    <p class="text-slate-400 text-xs mb-6">Cofre de llaves únicas mapeadas directamente a sus valores correspondientes.</p>
+                    
+                    <!-- Visual Chest / Key-Value -->
+                    <div class="space-y-2 bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                        <div class="flex items-center justify-between bg-amber-500/10 border border-amber-500/30 p-2 rounded-lg font-mono text-xs">
+                            <span class="text-amber-400 flex items-center gap-1">🔑 "rol"</span>
+                            <span class="text-slate-500">➔</span>
+                            <span class="text-white bg-slate-900 px-2 py-0.5 rounded font-bold">"Admin"</span>
+                        </div>
+                        <div class="flex items-center justify-between bg-amber-500/10 border border-amber-500/30 p-2 rounded-lg font-mono text-xs">
+                            <span class="text-amber-400 flex items-center gap-1">🔑 "score"</span>
+                            <span class="text-slate-500">➔</span>
+                            <span class="text-white bg-slate-900 px-2 py-0.5 rounded font-bold">98.5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sets -->
+                <div class="glass-card rounded-2xl p-6 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">⭕</span>
+                            <h3 class="text-xl font-bold text-white">Conjuntos <span class="text-xs font-mono text-emerald-400">{Sin Duplicados}</span></h3>
+                        </div>
+                        <span class="font-mono text-xs text-slate-500">tag_set = {1, 2, 3}</span>
+                    </div>
+                    <p class="text-slate-400 text-xs mb-6">Burbuja matemática sin orden donde cada elemento es estrictamente único.</p>
+                    
+                    <!-- Visual Venn Bubble -->
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800 flex items-center justify-center gap-4 relative overflow-hidden">
+                        <div class="w-20 h-20 rounded-full border-2 border-emerald-500/50 bg-emerald-500/10 flex items-center justify-center font-mono text-xs text-emerald-300 font-bold -mr-4">
+                            A: {1, 2}
+                        </div>
+                        <div class="w-20 h-20 rounded-full border-2 border-cyan-500/50 bg-cyan-500/10 flex items-center justify-center font-mono text-xs text-cyan-300 font-bold -ml-4">
+                            B: {2, 3}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: ESCALAS DIMENSIONALES -->
+        <section class="space-y-8">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold font-mono text-xl shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                    03
+                </div>
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">De lo Simple a lo Multidimensional</h2>
+                    <p class="text-slate-400 text-sm">Evolución geométrica de las estructuras matemáticas en memoria.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- Escalar (0D) -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-mono text-emerald-400 bg-emerald-950 px-2.5 py-1 rounded border border-emerald-800/50">Dimensión 0D</span>
+                            <span class="text-xs text-slate-500 font-mono">Rank 0</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Escalar</h3>
+                        <p class="text-slate-400 text-xs mt-2">Un punto singular en el espacio. Solo contiene magnitud pura.</p>
+                    </div>
+
+                    <!-- Visual Point -->
+                    <div class="bg-slate-950/80 rounded-xl p-8 border border-slate-800 flex flex-col items-center justify-center space-y-3">
+                        <div class="w-12 h-12 rounded-full bg-emerald-400 flex items-center justify-center text-slate-950 font-bold font-mono text-lg shadow-[0_0_25px_rgba(52,211,153,0.8)] animate-pulse">
+                            x
+                        </div>
+                        <span class="font-mono text-sm text-emerald-300">x = [ 5.0 ]</span>
+                    </div>
+                </div>
+
+                <!-- Vector (1D) -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-mono text-cyan-400 bg-cyan-950 px-2.5 py-1 rounded border border-cyan-800/50">Dimensión 1D</span>
+                            <span class="text-xs text-slate-500 font-mono">Rank 1</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Vector</h3>
+                        <p class="text-slate-400 text-xs mt-2">Una línea direccional. Arreglo unidimensional de características (Features).</p>
+                    </div>
+
+                    <!-- Visual Line / Array -->
+                    <div class="bg-slate-950/80 rounded-xl p-6 border border-slate-800 flex flex-col items-center justify-center space-y-4">
+                        <div class="flex items-center gap-1 w-full justify-center">
+                            <div class="w-10 h-10 bg-cyan-500/20 border border-cyan-400 rounded flex items-center justify-center font-mono text-xs text-cyan-300">1</div>
+                            <div class="w-1 h-0.5 bg-cyan-400"></div>
+                            <div class="w-10 h-10 bg-cyan-500/20 border border-cyan-400 rounded flex items-center justify-center font-mono text-xs text-cyan-300">2</div>
+                            <div class="w-1 h-0.5 bg-cyan-400"></div>
+                            <div class="w-10 h-10 bg-cyan-500/20 border border-cyan-400 rounded flex items-center justify-center font-mono text-xs text-cyan-300">3</div>
+                        </div>
+                        <span class="font-mono text-sm text-cyan-300">v = [ 1, 2, 3 ]</span>
+                    </div>
+                </div>
+
+                <!-- Matrix / Tensor 2D -->
+                <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-mono text-indigo-400 bg-indigo-950 px-2.5 py-1 rounded border border-indigo-800/50">Dimensión 2D</span>
+                            <span class="text-xs text-slate-500 font-mono">Rank 2</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">Matriz (Tensor 2D)</h3>
+                        <p class="text-slate-400 text-xs mt-2">Un plano o tabla bidimensional definido por filas y columnas (Alto x Ancho).</p>
+                    </div>
+
+                    <!-- Visual Grid Matrix -->
+                    <div class="bg-slate-950/80 rounded-xl p-4 border border-slate-800 flex flex-col items-center justify-center space-y-3">
+                        <div class="grid grid-cols-3 gap-1.5 p-2 bg-slate-900 border border-indigo-500/30 rounded-lg">
+                            <div class="w-8 h-8 bg-indigo-500/20 border border-indigo-400/50 rounded flex items-center justify-center font-mono text-xs text-indigo-300">1</div>
+                            <div class="w-8 h-8 bg-indigo-500/20 border border-indigo-400/50 rounded flex items-center justify-center font-mono text-xs text-indigo-300">0</div>
+                            <div class="w-8 h-8 bg-indigo-500/20 border border-indigo-400/50 rounded flex items-center justify-center font-mono text-xs text-indigo-300">4</div>
+                            <div class="w-8 h-8 bg-indigo-500/20 border border-indigo-400/50 rounded flex items-center justify-center font-mono text-xs text-indigo-300">2</div>
+                            <div class="w-8 h-8 bg-indigo-500/20 border border-indigo-400/50 rounded flex items-center justify-center font-mono text-xs text-indigo-300">9</div>
+                            <div class="w-8 h-8 bg-indigo-500/20 border border-indigo-400/50 rounded flex items-center justify-center font-mono text-xs text-indigo-300">7</div>
+                        </div>
+                        <span class="font-mono text-sm text-indigo-300">M.shape = (2, 3)</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: EL SALTO A LA INTELIGENCIA ARTIFICIAL -->
+        <section class="space-y-8">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-500 to-purple-500 flex items-center justify-center text-white font-bold font-mono text-xl shadow-[0_0_30px_rgba(168,85,247,0.4)]">
+                        04
+                    </div>
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">El Salto a la IA: Tensores Multidimensionales</h2>
+                        <p class="text-slate-400 text-sm">Cómo PyTorch y TensorFlow empaquetan imágenes, voz y texto en tensores ND.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Big Interactive 3D Tensor Showcase Container -->
+            <div class="glass-card rounded-3xl p-6 sm:p-10 border border-purple-500/30 relative overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Left Details -->
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="inline-block bg-purple-500/10 text-purple-400 font-mono text-xs px-3 py-1 rounded-full border border-purple-500/30">
+                        PyTorch / TensorFlow Standard
+                    </span>
+                    <h3 class="text-2xl sm:text-3xl font-black text-white">Tensor 3D/4D: La Moneda de Cambio de la IA</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Una imagen no es solo una matriz; es un **Tensor 3D** <code class="text-cyan-400 font-mono">(Alto, Ancho, Canales RGB)</code>.
+                    </p>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Cuando alimentas un lote (*batch*) de 64 imágenes a una Red Neuronal Convolucional, estás procesando un **Tensor 4D** en paralelo directamente en la GPU.
+                    </p>
+
+                    <div class="space-y-3 bg-slate-950/80 p-4 rounded-xl border border-slate-800/80 font-mono text-xs">
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Imagen RGB (3D):</span>
+                            <span class="text-cyan-400">[224, 224, 3]</span>
+                        </div>
+                        <div class="flex justify-between items-center text-slate-300">
+                            <span>Batch de Video (5D):</span>
+                            <span class="text-purple-400">[32, 16, 224, 224, 3]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Interactive 3D Interactive Display -->
+                <div class="lg:col-span-7 flex flex-col items-center justify-center p-6 bg-slate-950/90 rounded-2xl border border-slate-800 relative min-h-[360px]">
+                    
+                    <span class="absolute top-4 left-4 text-xs font-mono text-slate-500">Mueve o inspecciona la estructura 3D:</span>
+
+                    <!-- CSS 3D Tensor Projection -->
+                    <div class="perspective-1000 w-full h-64 flex items-center justify-center">
+                        <div id="tensorCube" class="transform-style-3d animate-cube-auto relative w-32 h-32 cursor-grab">
+                            
+                            <!-- Front Matrix (Red Channel) -->
+                            <div class="absolute inset-0 bg-rose-500/20 border-2 border-rose-400/80 rounded-lg flex items-center justify-center font-mono text-xs font-bold text-rose-300 shadow-[0_0_15px_rgba(244,63,94,0.4)]" style="transform: translateZ(40px);">
+                                CANAL R
+                            </div>
+
+                            <!-- Middle Matrix (Green Channel) -->
+                            <div class="absolute inset-0 bg-emerald-500/20 border-2 border-emerald-400/80 rounded-lg flex items-center justify-center font-mono text-xs font-bold text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.4)]" style="transform: translateZ(0px);">
+                                CANAL G
+                            </div>
+
+                            <!-- Back Matrix (Blue Channel) -->
+                            <div class="absolute inset-0 bg-cyan-500/20 border-2 border-cyan-400/80 rounded-lg flex items-center justify-center font-mono text-xs font-bold text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.4)]" style="transform: translateZ(-40px);">
+                                CANAL B
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Control Button -->
+                    <button id="toggleAnimBtn" class="mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-mono text-xs rounded-lg transition-all shadow-lg hover:shadow-purple-500/30">
+                        Pausar / Rotar Tensor
+                    </button>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center py-8 border-t border-slate-900 text-slate-500 text-xs font-mono space-y-2">
+            <p>Diseñado para la Conferencia Internacional sobre el Poder de los Datos</p>
+            <p class="text-slate-600">Sin datos de calidad bien estructurados, la Inteligencia Artificial no tiene fundamento.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Interactive 3D Tensor Rotation Pause/Play
+        const tensorCube = document.getElementById('tensorCube');
+        const toggleAnimBtn = document.getElementById('toggleAnimBtn');
+        let isAnimating = true;
+
+        toggleAnimBtn.addEventListener('click', () => {
+            if (isAnimating) {
+                tensorCube.classList.remove('animate-cube-auto');
+                toggleAnimBtn.innerText = 'Reanudar Rotación Auto';
+            } else {
+                tensorCube.classList.add('animate-cube-auto');
+                toggleAnimBtn.innerText = 'Pausar / Rotar Tensor';
+            }
+            isAnimating = !isAnimating;
+        });
+    </script>
+</body>
+</html>
