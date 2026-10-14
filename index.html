@@ -17,6 +17,8 @@ h1{font:600 clamp(30px,6vw,48px)/1.12 "IBM Plex Serif",Georgia,serif;margin:0 0 
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 a.card{display:block;background:var(--panel);border:1px solid var(--line);border-top:5px solid var(--par);border-radius:10px;padding:22px;color:inherit;text-decoration:none}
 a.card.b{border-top-color:var(--hip)}
+a.card.c{border-top-color:var(--ink)}
+.c .go{color:var(--ink)}
 a.card:hover{border-color:var(--ink)}
 a.card:focus-visible{outline:3px solid var(--hip);outline-offset:2px}
 h2{font:600 21px/1.25 "IBM Plex Serif",Georgia,serif;margin:0 0 8px}
@@ -29,14 +31,8 @@ footer{margin-top:40px;color:var(--mute);font-size:14px}
 <body>
 <main>
 <h1>Fundamentos de datos para inteligencia artificial</h1>
-<p class="lead">Dos recursos interactivos para entender cómo se comportan los datos y cómo se configura un modelo antes y durante el entrenamiento.</p>
+<p class="lead">Recursos interactivos para entender cómo se comportan los datos y cómo se configura un modelo antes y durante el entrenamiento.</p>
 <div class="cards">
- <a class="card" href="data.html">
-  <h2>los datos </h2>
-  <p>entendiendo los datos</p>
-  <span class="go">Abrir recurso</span>
- </a>
- 
  <a class="card" href="distribuciones-ia.html">
   <h2>Distribuciones de datos</h2>
   <p>Normal, uniforme, sesgada, exponencial, bimodal y Poisson. Mueve el parámetro de cada una y descubre qué algoritmos y transformaciones le convienen.</p>
@@ -45,6 +41,11 @@ footer{margin-top:40px;color:var(--mute);font-size:14px}
  <a class="card b" href="parametros-hiperparametros.html">
   <h2>Parámetros e hiperparámetros</h2>
   <p>Qué aprende el modelo solo y qué decides tú, recorriendo el flujo de entrenamiento y los algoritmos clásicos.</p>
+  <span class="go">Abrir recurso</span>
+ </a>
+ <a class="card c" href="data.html">
+  <h2>Datos</h2>
+  <p>Consulta y explora el conjunto de datos que acompaña a estos recursos.</p>
   <span class="go">Abrir recurso</span>
  </a>
 </div>
