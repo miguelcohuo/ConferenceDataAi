@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Parámetros e hiperparámetros en IA</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5f7;--panel:#fff;--ink:#12263a;--mute:#52667a;--line:#d5dde4;--par:#1b7f8f;--parbg:#e1f1f4;--hip:#c93d20;--hipbg:#fbe7e2;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a24;--panel:#152634;--ink:#e6eef4;--mute:#9bb0c0;--line:#27404f;--par:#4cc2d4;--parbg:#12394a;--hip:#ff8466;--hipbg:#47231c}}
+:root[data-theme="dark"]{--bg:#0e1a24;--panel:#152634;--ink:#e6eef4;--mute:#9bb0c0;--line:#27404f;--par:#4cc2d4;--parbg:#12394a;--hip:#ff8466;--hipbg:#47231c}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "IBM Plex Sans",system-ui,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:28px 18px 56px}
+h1{font:600 clamp(28px,5vw,44px)/1.15 "IBM Plex Serif",Georgia,serif;margin:0 0 10px;max-width:22ch}
+h2{font:600 22px/1.25 "IBM Plex Serif",Georgia,serif;margin:38px 0 14px}
+.lead{color:var(--mute);max-width:62ch;margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+.box{border-radius:10px;padding:18px;border:2px solid}
+.box.p{background:var(--parbg);border-color:var(--par)}
+.box.h{background:var(--hipbg);border-color:var(--hip)}
+.box h3{margin:0 0 6px;font-size:19px}
+.box.p h3{color:var(--par)}.box.h h3{color:var(--hip)}
+.box p{margin:0 0 8px}
+.tag{font-size:14px;color:var(--mute)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.flow button{flex:1 1 130px;font:500 15px "IBM Plex Sans",sans-serif;background:var(--panel);color:var(--ink);border:2px solid var(--line);border-radius:10px;padding:12px 8px;cursor:pointer}
+.flow button[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 3px var(--line)}
+.flow span{color:var(--mute);font-size:20px}
+button:focus-visible{outline:3px solid var(--hip);outline-offset:2px}
+.loop{font-size:14px;color:var(--mute);margin:8px 0 0}
+.detail{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;margin-top:14px}
+.detail h3{margin:0 0 4px;font:600 20px "IBM Plex Serif",Georgia,serif}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+@media(max-width:700px){.cols{grid-template-columns:1fr}}
+.cols>div{border-radius:8px;padding:12px 14px}
+.cols .p{background:var(--parbg)}.cols .h{background:var(--hipbg)}
+.cols b{display:block;margin-bottom:4px}
+.cols .p b{color:var(--par)}.cols .h b{color:var(--hip)}
+ul{margin:0;padding-left:18px}li{margin-bottom:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.m{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+.m h3{margin:0 0 8px;font-size:17px}
+.m .row{display:flex;gap:8px;margin-top:6px;font-size:14px}
+.m .row i{flex:none;font-style:normal;font-weight:600;width:24px;height:24px;border-radius:50%;text-align:center;line-height:24px;color:#fff}
+.row.p i{background:var(--par)}.row.h i{background:var(--hip)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.steps div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.steps b{display:block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<main>
+<h1>Parámetros e hiperparámetros: quién decide cada número</h1>
+<p class="lead">Un modelo de IA tiene dos tipos de ajustes. Unos los descubre solo mientras entrena. Otros los fijas tú antes de empezar. Confundirlos es el error más común al afinar un modelo.</p>
+
+<div class="two">
+ <div class="box p"><h3>Parámetros</h3><p>Valores que el modelo <b>aprende de los datos</b>. Cambian en cada paso del entrenamiento.</p><p class="tag">Ejemplos: pesos y sesgos de una red, coeficientes de una regresión, umbrales de un árbol.</p></div>
+ <div class="box h"><h3>Hiperparámetros</h3><p>Valores que <b>tú eliges antes</b> de entrenar. Controlan cómo y cuánto aprende el modelo.</p><p class="tag">Ejemplos: tasa de aprendizaje, número de capas, profundidad del árbol, k de k-NN.</p></div>
+</div>
+<p class="tag" style="margin-top:12px">Analogía: en una receta, la textura final del pan es lo aprendido (parámetros). La temperatura del horno y el tiempo son lo que tú decides (hiperparámetros).</p>
+
+<h2>Los elementos de un entrenamiento</h2>
+<div class="flow" id="flow"></div>
+<p class="loop">El ciclo se repite: el optimizador ajusta los parámetros según el error y el modelo vuelve a predecir. Toca un elemento para ver sus ajustes.</p>
+<div class="detail" id="detail"></div>
+
+<h2>Lo mismo en algoritmos clásicos</h2>
+<div class="grid" id="models"></div>
+
+<h2>Cómo elegir los hiperparámetros</h2>
+<div class="steps">
+ <div><b>1. Divide los datos</b>Entrenamiento para aprender, validación para comparar hiperparámetros y prueba para la nota final.</div>
+ <div><b>2. Prueba combinaciones</b>Búsqueda en rejilla si son pocos, aleatoria si son muchos, bayesiana si cada prueba es costosa.</div>
+ <div><b>3. Mide en validación</b>Elige la combinación con mejor resultado en datos que el modelo no usó para aprender.</div>
+ <div><b>4. Evalúa una sola vez</b>Usa el conjunto de prueba al final. Si ajustas con él, la nota deja de ser honesta.</div>
+</div>
+</main>
+
+<script>
+const E=[
+{n:"Datos",d:"La materia prima del modelo. Su preparación también tiene ajustes.",
+ p:["Media y desviación calculadas para normalizar","Vocabulario aprendido (en texto)"],
+ h:["Proporción de entrenamiento, validación y prueba","Tamaño del lote (batch size)","Método de escalado"]},
+{n:"Modelo",d:"La estructura que transforma entradas en predicciones, por ejemplo una red neuronal.",
+ p:["Pesos de cada conexión","Sesgos (bias) de cada neurona","Filtros en redes convolucionales"],
+ h:["Número de capas","Neuronas por capa","Tamaño de los filtros","Tasa de dropout"]},
+{n:"Activación",d:"Introduce no linealidad para que la red aprenda patrones complejos.",
+ p:["Normalmente ninguno (ReLU, sigmoide)","En PReLU, la pendiente negativa se aprende"],
+ h:["Tipo de función: ReLU, tanh, sigmoide, GELU","Pendiente de LeakyReLU"]},
+{n:"Pérdida",d:"Mide cuánto se equivoca el modelo. Es la señal que guía el aprendizaje.",
+ p:["No tiene: se calcula con las predicciones y las etiquetas"],
+ h:["Tipo: error cuadrático, entropía cruzada","Pesos por clase","Fuerza de regularización (λ)"]},
+{n:"Optimizador",d:"Decide cómo corregir los parámetros a partir del error.",
+ p:["Los pesos que actualiza","Estados internos como el momento"],
+ h:["Tasa de aprendizaje","Épocas de entrenamiento","Momento (β)","Algoritmo: SGD, Adam"]}];
+const M=[
+["Regresión lineal",["Coeficientes de cada variable","Intercepto"],["Fuerza de regularización (Ridge / Lasso)"]],
+["Árbol de decisión",["Variable y umbral de cada división","Valores en las hojas"],["Profundidad máxima","Mínimo de muestras por hoja"]],
+["Random Forest",["Los árboles individuales entrenados"],["Número de árboles","Variables por división","Profundidad máxima"]],
+["k-NN",["Ninguno: guarda los datos de entrenamiento"],["k (número de vecinos)","Métrica de distancia"]],
+["SVM",["Vectores de soporte y sus coeficientes"],["C (margen vs. error)","Tipo de kernel","gamma"]],
+["k-means",["Posición de los centroides"],["k (número de grupos)","Iteraciones máximas","Inicialización"]],
+["Gradient Boosting",["Árboles secuenciales y sus valores"],["Tasa de aprendizaje","Número de árboles","Profundidad"]]];
+const li=a=>"<ul>"+a.map(x=>`<li>${x}</li>`).join("")+"</ul>";
+const fl=document.getElementById("flow");
+fl.innerHTML=E.map((e,i)=>`<button data-i="${i}" aria-pressed="false">${e.n}</button>`+(i<E.length-1?"<span aria-hidden='true'>→</span>":"")).join("");
+function show(i){
+ const e=E[i];
+ fl.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.i==i));
+ document.getElementById("detail").innerHTML=`<h3>${e.n}</h3><p style="margin:0;color:var(--mute)">${e.d}</p><div class="cols"><div class="p"><b>Parámetros (los aprende)</b>${li(e.p)}</div><div class="h"><b>Hiperparámetros (tú decides)</b>${li(e.h)}</div></div>`;
+}
+fl.onclick=e=>{const b=e.target.closest("button");if(b)show(+b.dataset.i)};
+show(1);
+document.getElementById("models").innerHTML=M.map(m=>`<div class="m"><h3>${m[0]}</h3><div class="row p"><i>P</i><div>${m[1].join("<br>")}</div></div><div class="row h"><i>H</i><div>${m[2].join("<br>")}</div></div></div>`).join("");
+</script>
+</body>
+</html>

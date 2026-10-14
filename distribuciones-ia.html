@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Distribuciones de datos para IA</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5f7;--panel:#fff;--ink:#12263a;--mute:#52667a;--line:#d5dde4;--acc:#1b7f8f;--acc2:#d9482b;--fill:rgba(27,127,143,.18);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a24;--panel:#152634;--ink:#e6eef4;--mute:#9bb0c0;--line:#27404f;--acc:#4cc2d4;--acc2:#ff7a5c;--fill:rgba(76,194,212,.22)}}
+:root[data-theme="dark"]{--bg:#0e1a24;--panel:#152634;--ink:#e6eef4;--mute:#9bb0c0;--line:#27404f;--acc:#4cc2d4;--acc2:#ff7a5c;--fill:rgba(76,194,212,.22)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+main{max-width:980px;margin:0 auto;padding:28px 18px 56px}
+h1{font:600 clamp(28px,5vw,44px)/1.15 "IBM Plex Serif",Georgia,serif;margin:0 0 10px;max-width:20ch}
+.lead{color:var(--mute);max-width:62ch;margin:0 0 26px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{font:500 15px inherit;font-family:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--acc);border-color:var(--acc);color:#fff}
+button:focus-visible,input:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px}
+.grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
+@media(max-width:780px){.grid{grid-template-columns:1fr}}
+h2{font:600 24px/1.2 "IBM Plex Serif",Georgia,serif;margin:0 0 6px}
+h3{font-size:15px;margin:18px 0 4px;color:var(--acc)}
+p{margin:0 0 8px}
+ul{margin:0;padding-left:20px}
+li{margin-bottom:3px}
+svg{width:100%;height:auto;display:block}
+.ctl{display:flex;align-items:center;gap:12px;margin-top:10px;color:var(--mute);font-size:14px}
+.ctl input{flex:1;accent-color:var(--acc)}
+.stats{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--mute);margin-top:6px}
+.stats b{color:var(--ink)}
+.rule{border-left:4px solid var(--acc2);padding:6px 12px;margin-top:18px;background:var(--bg);border-radius:0 6px 6px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.wrap{overflow-x:auto;margin-top:22px}
+</style>
+</head>
+<body>
+<main>
+<h1>Distribuciones de datos y su efecto en la IA</h1>
+<p class="lead">La forma en que se reparten tus datos decide qué algoritmo funciona mejor y qué preprocesamiento necesitas. Elige una distribución, mueve el control y observa cómo cambia la forma.</p>
+
+<div class="tabs" role="tablist" id="tabs"></div>
+
+<section class="card">
+ <div class="grid">
+  <div>
+   <svg id="chart" viewBox="0 0 600 290" role="img" aria-label="Gráfica de la distribución"></svg>
+   <div class="ctl"><label for="p" id="plabel"></label><input id="p" type="range"><output id="pval"></output></div>
+   <div class="stats" id="stats"></div>
+  </div>
+  <div id="info"></div>
+ </div>
+</section>
+
+<div class="wrap card">
+<table>
+<thead><tr><th>Distribución</th><th>Algoritmos que la toleran bien</th><th>Transformación habitual</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+</main>
+
+<script>
+const D={
+normal:{n:"Normal",pl:"Desviación estándar (σ)",min:.5,max:2.5,v:1.2,st:.1,
+ f:(x,s)=>Math.exp(-((x-5)**2)/(2*s*s)),dom:[0,10],
+ d:"Simétrica en forma de campana: la media, la mediana y la moda coinciden. La mayoría de los valores quedan cerca del centro.",
+ ej:["Estatura de una población","Errores de medición de un sensor","Ruido en señales"],
+ ia:"Regresión lineal, LDA/QDA, Naive Bayes gaussiano, PCA y redes neuronales con inicialización estándar asumen o se benefician de datos casi normales.",
+ alg:"Regresión lineal, Naive Bayes gaussiano, LDA, PCA, redes neuronales",tr:"Normalizar con z-score (media 0, desviación 1)"},
+uniforme:{n:"Uniforme",pl:"Ancho del intervalo",min:2,max:10,v:6,st:.5,
+ f:(x,w)=>(x>=5-w/2&&x<=5+w/2)?1:0,dom:[0,10],
+ d:"Todos los valores del rango tienen la misma probabilidad. No hay una zona más común que otra.",
+ ej:["Número aleatorio de un dado justo","Pesos iniciales aleatorios","Muestreo aleatorio simple"],
+ ia:"Los árboles y los métodos basados en rangos funcionan sin problema. Escalar con min-max conserva la forma. Es la base para generar datos sintéticos y hacer inicializaciones.",
+ alg:"Árboles de decisión, Random Forest, k-NN, generación de datos sintéticos",tr:"Escalado min-max a [0, 1]"},
+lognormal:{n:"Sesgada (log-normal)",pl:"Grado de sesgo (σ)",min:.3,max:1,v:.6,st:.05,
+ f:(x,s)=>x<=0?0:Math.exp(-((Math.log(x)-1)**2)/(2*s*s))/x,dom:[0,10],
+ d:"Cola larga hacia la derecha: pocos valores muy altos arrastran la media por encima de la mediana.",
+ ej:["Ingresos y precios de vivienda","Tamaño de archivos","Tiempos de respuesta"],
+ ia:"Los valores extremos dominan la pérdida cuadrática y distorsionan la regresión lineal y k-means. Aplicar log reduce el sesgo y estabiliza el entrenamiento.",
+ alg:"Árboles y boosting (robustos); regresión y redes tras transformar",tr:"Logaritmo, raíz cuadrada o Box-Cox"},
+exponencial:{n:"Exponencial",pl:"Tasa (λ)",min:.2,max:1.5,v:.6,st:.05,
+ f:(x,l)=>Math.exp(-l*x),dom:[0,10],
+ d:"Mucha densidad cerca de cero que decae rápido. Describe el tiempo hasta que ocurre un evento aleatorio.",
+ ej:["Tiempo entre llegadas de clientes","Vida útil de componentes","Tiempo entre fallos"],
+ ia:"Es la base del análisis de supervivencia y de las colas. Con regresión normal da residuos sesgados; usa modelos lineales generalizados o transforma la variable.",
+ alg:"Modelos de supervivencia, GLM, boosting",tr:"Logaritmo o modelo con pérdida adecuada"},
+bimodal:{n:"Bimodal",pl:"Separación entre picos",min:1,max:6,v:3.5,st:.25,
+ f:(x,d)=>Math.exp(-((x-5+d/2)**2)/(2*.8*.8))+.8*Math.exp(-((x-5-d/2)**2)/(2*.8*.8)),dom:[0,10],
+ d:"Dos picos: los datos mezclan dos subpoblaciones distintas. La media cae en un valle donde casi no hay datos.",
+ ej:["Horas de uso de una app (mañana y noche)","Alturas de hombres y mujeres mezclados","Dos tipos de clientes"],
+ ia:"La media engaña. Conviene separar los grupos: clustering o modelos de mezcla gaussiana descubren las subpoblaciones y suelen mejorar la predicción.",
+ alg:"Gaussian Mixture Models, k-means, DBSCAN, árboles",tr:"Crear variable de grupo o modelar la mezcla"},
+poisson:{n:"Poisson (conteos)",pl:"Promedio de eventos (λ)",min:1,max:15,v:4,st:1,disc:true,
+ f:(k,l)=>{let f=1;for(let i=2;i<=k;i++)f*=i;return Math.exp(-l)*Math.pow(l,k)/f},dom:[0,24],
+ d:"Conteos enteros no negativos de eventos en un intervalo fijo. Con λ pequeño es asimétrica; al crecer se parece a una normal.",
+ ej:["Visitas por hora a un sitio","Defectos por pieza","Llamadas por minuto"],
+ ia:"La variable objetivo es discreta: usa regresión de Poisson o binomial negativa en lugar de mínimos cuadrados, que puede predecir valores negativos.",
+ alg:"Regresión de Poisson, binomial negativa, boosting con pérdida Poisson",tr:"Raíz cuadrada (estabiliza varianza) o modelo de conteos"}
+};
+const keys=Object.keys(D);let cur="normal";
+const $=id=>document.getElementById(id);
+$("tabs").innerHTML=keys.map(k=>`<button role="tab" data-k="${k}">${D[k].n}</button>`).join("");
+$("rows").innerHTML=keys.map(k=>`<tr><td><b>${D[k].n}</b></td><td>${D[k].alg}</td><td>${D[k].tr}</td></tr>`).join("");
+$("tabs").onclick=e=>{const b=e.target.closest("button");if(b){cur=b.dataset.k;setup()}};
+$("p").oninput=draw;
+
+function setup(){
+ const d=D[cur];const p=$("p");
+ p.min=d.min;p.max=d.max;p.step=d.st;p.value=d.v;
+ $("plabel").textContent=d.pl;
+ document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.k===cur));
+ $("info").innerHTML=`<h2>${d.n}</h2><p>${d.d}</p>
+ <h3>Ejemplos reales</h3><ul>${d.ej.map(e=>`<li>${e}</li>`).join("")}</ul>
+ <h3>Qué significa para la IA</h3><p>${d.ia}</p>
+ <div class="rule"><b>Transformación habitual:</b> ${d.tr}.</div>`;
+ draw();
+}
+function draw(){
+ const d=D[cur],p=+$("p").value;$("pval").textContent=p;
+ const W=600,H=290,L=36,R=14,T=14,B=34,[x0,x1]=d.dom;
+ const X=x=>L+(x-x0)/(x1-x0)*(W-L-R);
+ let pts=[];
+ if(d.disc){for(let k=x0;k<=x1;k++)pts.push([k,d.f(k,p)])}
+ else{for(let i=0;i<=240;i++){const x=x0+(x1-x0)*i/240;pts.push([x,d.f(x,p)])}}
+ const m=Math.max(...pts.map(q=>q[1]))||1;
+ const Y=y=>H-B-(y/m)*(H-B-T-10);
+ let s=`<line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="var(--line)" stroke-width="2"/>`;
+ for(let i=0;i<=5;i++){const x=x0+(x1-x0)*i/5;s+=`<text x="${X(x)}" y="${H-12}" fill="var(--mute)" font-size="12" text-anchor="middle">${Math.round(x)}</text>`}
+ s+=`<text x="8" y="${T+8}" fill="var(--mute)" font-size="12">densidad</text>`;
+ if(d.disc){const bw=(W-L-R)/(x1-x0+1)*.7;
+  pts.forEach(q=>{s+=`<rect x="${X(q[0])-bw/2}" y="${Y(q[1])}" width="${bw}" height="${H-B-Y(q[1])}" fill="var(--acc)" opacity=".85"/>`})}
+ else{const line=pts.map((q,i)=>(i?"L":"M")+X(q[0]).toFixed(1)+" "+Y(q[1]).toFixed(1)).join("");
+  s+=`<path d="${line}L${X(x1)} ${H-B}L${X(x0)} ${H-B}Z" fill="var(--fill)"/><path d="${line}" fill="none" stroke="var(--acc)" stroke-width="3"/>`}
+ // media y mediana
+ let tot=0,mean=0;pts.forEach(q=>{tot+=q[1];mean+=q[0]*q[1]});mean/=tot;
+ let acc=0,med=x0;for(const q of pts){acc+=q[1];if(acc>=tot/2){med=q[0];break}}
+ s+=`<line x1="${X(mean)}" x2="${X(mean)}" y1="${T}" y2="${H-B}" stroke="var(--acc2)" stroke-width="2" stroke-dasharray="6 4"/>`;
+ s+=`<line x1="${X(med)}" x2="${X(med)}" y1="${T}" y2="${H-B}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="2 4"/>`;
+ $("chart").innerHTML=s;
+ const sk=Math.abs(mean-med)>(x1-x0)*.02?(mean>med?"a la derecha":"a la izquierda"):"simétrica";
+ $("stats").innerHTML=`<span><b style="color:var(--acc2)">- - -</b> Media: <b>${mean.toFixed(2)}</b></span><span><b>· · ·</b> Mediana: <b>${med.toFixed(2)}</b></span><span>Forma: <b>${sk}</b></span>`;
+}
+setup();
+</script>
+</body>
+</html>
